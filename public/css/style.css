@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#header{
+    text-align: center;
+}
+/* index page styling */
+.box{
+    border: 2px solid;
+    width: 400px;
+    margin: 100px auto;
+    height: 400px;
+    background: white;
+    border-top-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+.box h1{
+    text-align: center;
+    margin: 20px 10px;
+}
+.box form .labels{
+    font-size: 20px;
+    margin: 10px 0px;
+}
+.box form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.box form input{
+    width: 80%;
+    height: 20px;
+    padding: 5px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+.box form button{
+    width: 300px;
+    padding: 7px 8px;
+    border-radius: 20px;
+    background: black;
+    color: white;
+    font-size: 18px;
+    transition: 0.5s ease;
+}
+.box form button:hover{
+    cursor: pointer;
+    color: black;
+    background: white;
+}
+/* chat page styling */
+#outer-container{
+    display: flex;
+    height: 575px;
+    margin: 0px 40px;
+}
+#left{
+    border: 1px solid black;
+    width: 15%;
+    background: black;
+    color: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+#center{
+    border: 1px solid black;
+    width: 50%;
+}
+#right{
+    border: 1px solid black;
+    width: 35%;
+    background: black;
+}
+#messages-container{
+    height: 480px;
+    background: white;
+    margin: 5px 5px;
+    border-radius: 10px;
+    overflow-y: scroll;
+}
+#right form{
+    margin: 5px 5px;
+
+}
+#right form input{
+    width: 80%;
+    height: 20px;
+    padding: 5px;
+    border-radius: 20px;
+}
+#send-msg{
+    padding: 6px;
+    width: 60px;
+    border-radius: 25px;
+    background: white;
+}
+#send-location{
+    padding: 5px;
+    margin: 5px 5px;
+    width: 125px;
+    border-radius: 25px;
+    background: white;
+}
+#right form button:hover{
+    cursor: pointer;
+    background: whitesmoke;
+}
+.single-msg{
+    margin: 5px 10px;
+    background: whitesmoke;
+    padding: 0px 10px;
+    border-radius: 10px;
+}
+.username{
+    font-weight: 600;
+    font-size: 13px;
+}
+.time{
+    font-size: 11px;
+}
+.actual-msg{
+    font-size: 19px;
+}
+
+/* leftbar css */
+
+#left h2{
+    text-align: center;
+    margin: 10px 2px;
+}
+#left h3{
+    margin: 10px 15px;
+}
+#left ul li{
+    margin: 10px 15px;
+    list-style: none;
+}

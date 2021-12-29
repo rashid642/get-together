@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GetTogether</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" href="./images/favicon.ico">
+</head>
+
+<body>
+    <h1 id="header">GetTogether</h1>
+    <div id="outer-container">
+        <div id="left"></div>
+        <div id="center">
+            <p style="text-align: center;">Vedio calling comming soon</p>
+        </div>
+        <div id="right">
+            <div id="messages-container"></div>
+            <form>
+                <input type="text" name="message" placeholder="Type your message.." autocomplete="off" required>
+                <button id="send-msg" type="submit">Send</button>
+                <button id="send-location">Send Location</button>
+            </form>
+        </div>
+    </div>
+    <script id="msg-temp" type="text/html">
+        <div class="single-msg">
+            <p>
+                <span class="username">{{username}}</span>
+                <span class="time">{{createdAt}}</span>
+            </p>
+            <p class="actual-msg">{{message}}</p>
+        </div>
+    </script>
+    <script id="loc-temp" type="text/html">
+        <div class="single-msg">
+            <p>
+                <span class="username">{{username}}</span>
+                <span class="time">{{createdAt}}</span>
+            </p>
+            <p class="actual-msg"><a href="{{url}}" target="_blank">My Current Location</a></p>
+        </div>
+    </script>
+    <script id="left-temp" type="text/html">
+        <h2>Room - {{room}}</h2>
+        <h3>Users</h3>
+        <ul>
+            {{#users}}
+            <li>{{username}}</li>
+            {{/users}}
+        </ul>
+    </script>
+    <!-- <button id="increment">Increment</button> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/chat.js"></script>
+</body>
+
+</html>
