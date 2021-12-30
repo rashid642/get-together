@@ -1,4 +1,4 @@
-let users = [];
+const users = [];
 const addUser = ({id, username, room}) =>{
     //clean data
     username = username.trim().toLowerCase();
@@ -46,12 +46,6 @@ const getUsersInRoom = (room) =>{
     })
     return usersinroom;
 }
-addUser({
-    id: 1,
-    username: "Rashid",
-    room: "room1",
-})
-console.log(getUser(1));
 module.exports = {
     addUser,
     removeUser,
