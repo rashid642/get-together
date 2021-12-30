@@ -32,6 +32,13 @@ io.on("connection",(socket)=>{
         })
         callback();
     })
+    socket.on("vedio-call",(stream)=>{
+        console.log("vedio-call is called");
+        const user = getUser(socket.id)
+        console.log(stream);
+        socket.broadcast.to(user.room).emit('stream-braoadcast', stream);
+        // socket.to(user.room).broadcast.emit('stream-braoadcast', userId)
+    })
     socket.on("sendMessage",(msg, callback)=>{
         const user = getUser(socket.id)
         io.to(user.room).emit("message",generateMessage(user.username, msg));

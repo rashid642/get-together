@@ -11,7 +11,7 @@ const loctemp = document.getElementById("loc-temp").innerHTML;
 const lefttemp = document.getElementById("left-temp").innerHTML;
 
 
-const autoscroll = () =>{
+const autoscroll = () => {
     // const newmsg = singlemsg.lastElementChild;
     // const newmsgStyle = getComputedStyle(newmsg);
     // const newmsgMargin = parseInt(newmsgStyle.marginBottom);
@@ -23,37 +23,68 @@ const autoscroll = () =>{
     // msgcontainer.scrollTop = msgcontainer.scrollHeight;
 }
 
-const {username, room} = Qs.parse(location.search, {ignoreQueryPrefix: true});
-socket.emit("join",{username, room},(error)=>{
-    if(error){
+//adding vedio call
+const videoGrid = document.getElementById('center')
+const myVideo = document.createElement('video')
+myVideo.muted = true
+const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
+navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: true
+}).then(stream => {
+    console.log(stream);
+    socket.emit("vedio-call", stream);
+    addVideoStream(myVideo, stream)
+})
+function addVideoStream(video, stream) {
+    video.srcObject = stream
+    video.addEventListener('loadedmetadata', () => {
+        video.play()
+    })
+    videoGrid.append(video)
+}
+
+socket.on("stream-braoadcast",(stream)=>{
+    const video = document.createElement('video')
+    console.log("braodcasting-vedio");
+    video.srcObject = stream
+    video.addEventListener('loadedmetadata', () => {
+        video.play()
+    })
+    videoGrid.append(video)
+})
+
+socket.emit("join", { username, room }, (error) => {
+    if (error) {
         alert(error);
-        location.href="/"
+        location.href = "/"
     }
 });
 
-socket.on("message",(msg)=>{
-        const html = Mustache.render(msgtemp,{
-            username: msg.username,
-            message: msg.text,
-            createdAt: moment(msg.createdAt).format('h:mm A'),
-        });
-        msgcontainer.insertAdjacentHTML('beforeend',html);
-        autoscroll();
+
+socket.on("message", (msg) => {
+    const html = Mustache.render(msgtemp, {
+        username: msg.username,
+        message: msg.text,
+        createdAt: moment(msg.createdAt).format('h:mm A'),
+    });
+    msgcontainer.insertAdjacentHTML('beforeend', html);
+    autoscroll();
 })
 
-socket.on("roomData",({room, users})=>{
-    const html = Mustache.render(lefttemp,{
+socket.on("roomData", ({ room, users }) => {
+    const html = Mustache.render(lefttemp, {
         room,
         users,
     });
-    left.innerHTML=html;
+    left.innerHTML = html;
 })
 
-document.querySelector("form").addEventListener("submit",(e)=>{
+document.querySelector("form").addEventListener("submit", (e) => {
     let input = e.target.elements.message;
     msgbtn.setAttribute('disabled', 'disabled');
     e.preventDefault();
-    socket.emit("sendMessage", input.value,(msg)=>{
+    socket.emit("sendMessage", input.value, (msg) => {
         msgbtn.removeAttribute('disabled');
         msgarea.value = "";
         msgarea.focus();
@@ -61,25 +92,25 @@ document.querySelector("form").addEventListener("submit",(e)=>{
     });
 })
 
-socket.on("location-message",(msg)=>{
-    const html = Mustache.render(loctemp,{
+socket.on("location-message", (msg) => {
+    const html = Mustache.render(loctemp, {
         username: msg.username,
         url: msg.url,
-        createdAt: moment(msg.createdAt).format('h:mm A'), 
+        createdAt: moment(msg.createdAt).format('h:mm A'),
     });
-    msgcontainer.insertAdjacentHTML('beforeend',html);
+    msgcontainer.insertAdjacentHTML('beforeend', html);
     console.log(msg);
     autoscroll();
 })
 
-document.querySelector("#send-location").addEventListener("click",()=>{
+document.querySelector("#send-location").addEventListener("click", () => {
     locbtn.setAttribute('disabled', 'disabled');
-    if(!navigator.geolocation){
+    if (!navigator.geolocation) {
         return alert("Your browser doesn't support geo location");
     }
-    navigator.geolocation.getCurrentPosition((position)=>{
-        let msg = "latitude="+position.coords.latitude+" Longitude="+position.coords.longitude;
-        socket.emit("sendlocation",{lat: position.coords.latitude, lon: position.coords.longitude},(msg)=>{
+    navigator.geolocation.getCurrentPosition((position) => {
+        let msg = "latitude=" + position.coords.latitude + " Longitude=" + position.coords.longitude;
+        socket.emit("sendlocation", { lat: position.coords.latitude, lon: position.coords.longitude }, (msg) => {
             locbtn.removeAttribute('disabled');
             console.log(msg);
         });

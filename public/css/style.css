@@ -72,6 +72,15 @@
 #center{
     border: 1px solid black;
     width: 50%;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 50%);
+    grid-auto-rows: 50%;
+}
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 #right{
     border: 1px solid black;
